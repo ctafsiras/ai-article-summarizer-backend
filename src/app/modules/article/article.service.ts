@@ -116,8 +116,18 @@ const summerizeSingleArticle = async (articleId: number) => {
 
   const client = new OpenAI();
   const response = await client.responses.create({
-    model: 'gpt-4.1',
-    input: articleData.body,
+    model: 'gpt-4o-mini',
+    input: [
+      {
+        role: 'system',
+        content:
+          'You are an expert in article summerizing. Please summerize the user content article in 50 words.',
+      },
+      {
+        role: 'user',
+        content: `Article Title: ${articleData.title}. Article Body: ${articleData.body}`,
+      },
+    ],
   });
   return { result: response.output_text };
 };
