@@ -41,8 +41,6 @@ router.get(
   ArticleController.getSingleArticle,
 );
 
-router.get('/tags', auth(USER_ROLE.user), ArticleController.getArticlesByTags);
-
 router.get(
   '/summerize/:articleId',
   auth(USER_ROLE.user),

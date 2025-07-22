@@ -50,7 +50,8 @@ const getMyAllArticleFromDB = async (
   userId: number,
   query: Record<string, unknown>,
 ) => {
-  const { searchTerm = '' } = query;
+  const { searchTerm = '', tags = '' } = query;
+  const tagsArray = (tags as string).split(',');
   const searchableFields = ['title', 'body'];
 
   const articleData = await prisma.article.findMany({
@@ -59,19 +60,13 @@ const getMyAllArticleFromDB = async (
       OR: searchableFields.map((field) => ({
         [field]: { contains: searchTerm },
       })),
+      tags: { hasSome: tagsArray },
     },
   });
   if (!articleData) {
     throw new AppError(httpStatus.NOT_FOUND, 'Article does not exist!');
   }
   return articleData;
-};
-
-const getArticlesByTagsFromDB = async (tags: string[]) => {
-  const result = await prisma.article.findMany({
-    where: { tags: { hasSome: tags } },
-  });
-  return result;
 };
 
 const getAllArticlesFromDB = async (query: Record<string, unknown>) => {
@@ -129,7 +124,6 @@ export const ArticleService = {
   deleteArticleFromDB,
   updateArticleInDB,
   getSingleArticleFromDB,
-  getArticlesByTagsFromDB,
   getAllArticlesFromDB,
   summerizeSingleArticle,
   getMyAllArticleFromDB,

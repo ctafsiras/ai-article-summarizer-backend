@@ -66,17 +66,6 @@ const getMyAllArticle = catchAsync(async (req: CustomRequest, res) => {
   });
 });
 
-const getArticlesByTags = catchAsync(async (req: CustomRequest, res) => {
-  const tags: string[] = (req.query.tags as string).split(',') || [];
-  const result = await ArticleService.getArticlesByTagsFromDB(tags);
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Articles by tags retrieved successfully!',
-    data: result,
-  });
-});
-
 const getAllArticles = catchAsync(async (req, res) => {
   const result = await ArticleService.getAllArticlesFromDB(req.query);
   sendResponse(res, {
@@ -103,7 +92,6 @@ export const ArticleController = {
   deleteArticle,
   updateArticle,
   getSingleArticle,
-  getArticlesByTags,
   getAllArticles,
   getMyAllArticle,
   summerizeSingleArticle,
