@@ -27,14 +27,6 @@ router.patch(
   ArticleController.updateArticle,
 );
 
-router.get(
-  '/:articleId',
-  auth(USER_ROLE.user),
-  ArticleController.getSingleArticle,
-);
-
-router.get('/tags', auth(USER_ROLE.user), ArticleController.getArticlesByTags);
-
 router.get('/', auth(USER_ROLE.user), ArticleController.getAllArticles);
 
 router.get(
@@ -42,6 +34,14 @@ router.get(
   auth(USER_ROLE.user),
   ArticleController.getMyAllArticle,
 );
+
+router.get(
+  '/:articleId',
+  auth(USER_ROLE.user),
+  ArticleController.getSingleArticle,
+);
+
+router.get('/tags', auth(USER_ROLE.user), ArticleController.getArticlesByTags);
 
 router.get(
   '/summerize/:articleId',

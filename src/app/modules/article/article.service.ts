@@ -68,7 +68,7 @@ const getAllArticlesFromDB = async (query: Record<string, unknown>) => {
     searchTerm = '',
     page = 1,
     limit = 20,
-    sortBy,
+    sortBy = 'createdAt',
     sortOrder = 'asc',
   } = query;
 
