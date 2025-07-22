@@ -46,9 +46,20 @@ const getSingleArticleFromDB = async (articleId: number) => {
   return articleData;
 };
 
-const getMyAllArticleFromDB = async (userId: number) => {
+const getMyAllArticleFromDB = async (
+  userId: number,
+  query: Record<string, unknown>,
+) => {
+  const { searchTerm = '' } = query;
+  const searchableFields = ['title', 'body'];
+
   const articleData = await prisma.article.findMany({
-    where: { userId: userId },
+    where: {
+      userId: userId,
+      OR: searchableFields.map((field) => ({
+        [field]: { contains: searchTerm },
+      })),
+    },
   });
   if (!articleData) {
     throw new AppError(httpStatus.NOT_FOUND, 'Article does not exist!');

@@ -54,7 +54,10 @@ const getSingleArticle = catchAsync(async (req: CustomRequest, res) => {
 
 const getMyAllArticle = catchAsync(async (req: CustomRequest, res) => {
   const userId = req.user?.id;
-  const result = await ArticleService.getMyAllArticleFromDB(Number(userId));
+  const result = await ArticleService.getMyAllArticleFromDB(
+    Number(userId),
+    req.query,
+  );
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
