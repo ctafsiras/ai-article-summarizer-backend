@@ -21,7 +21,8 @@ const createUserIntoDB = async (payload: TUser) => {
   const result = await prisma.user.create({
     data: { ...payload, password: hashedPassword },
   });
-  return result;
+  const { password: _, ...userWithoutPassword } = result;
+  return userWithoutPassword;
 };
 
 const updateUserInDB = async (
@@ -32,12 +33,17 @@ const updateUserInDB = async (
     where: { id: user?.id },
     data: payload,
   });
-  return result;
+  const { password: _, ...userWithoutPassword } = result;
+  return userWithoutPassword;
 };
 
 const getMeFromDB = async (id: number) => {
   const result = await prisma.user.findUnique({ where: { id } });
-  return result;
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User does not exist!');
+  }
+  const { password: _, ...userWithoutPassword } = result;
+  return userWithoutPassword;
 };
 
 const deleteUserFromDB = async (
@@ -45,7 +51,8 @@ const deleteUserFromDB = async (
   id: number,
 ) => {
   const result = await prisma.user.delete({ where: { id } });
-  return result;
+  const { password: _, ...userWithoutPassword } = result;
+  return userWithoutPassword;
 };
 
 export const UserServices = {
