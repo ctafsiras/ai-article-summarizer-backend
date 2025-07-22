@@ -3,8 +3,16 @@ import { TUser } from './user.interface';
 import { prisma } from '../../utils/prisma';
 import config from '../../config';
 import bcrypt from 'bcrypt';
+import AppError from '../../errors/AppError';
+import httpStatus from 'http-status';
 
 const createUserIntoDB = async (payload: TUser) => {
+  const isUserExist = await prisma.user.findUnique({
+    where: { email: payload.email },
+  });
+  if (isUserExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'User already exists!');
+  }
   const password = payload.password;
   const hashedPassword = await bcrypt.hash(
     password,
