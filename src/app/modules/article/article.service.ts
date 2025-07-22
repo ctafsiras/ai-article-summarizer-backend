@@ -51,16 +51,21 @@ const getMyAllArticleFromDB = async (
   query: Record<string, unknown>,
 ) => {
   const { searchTerm = '', tags = '' } = query;
-  const tagsArray = (tags as string).split(',');
+  const tagsArray =
+    typeof tags === 'string' && tags.length > 0 ? tags.split(',') : [];
   const searchableFields = ['title', 'body'];
 
   const articleData = await prisma.article.findMany({
     where: {
       userId: userId,
-      OR: searchableFields.map((field) => ({
-        [field]: { contains: searchTerm },
-      })),
-      tags: { hasSome: tagsArray },
+      ...(searchTerm
+        ? {
+            OR: searchableFields.map((field) => ({
+              [field]: { contains: searchTerm, mode: 'insensitive' },
+            })),
+          }
+        : {}),
+      ...(tagsArray.length > 0 ? { tags: { hasSome: tagsArray } } : {}),
     },
   });
   if (!articleData) {
@@ -76,14 +81,11 @@ const getAllArticlesFromDB = async (query: Record<string, unknown>) => {
     limit = 20,
     sortBy = 'createdAt',
     sortOrder = 'asc',
+    tags = '',
   } = query;
 
-  const filter: Record<string, unknown> = {};
-
-  if (query.tags) {
-    filter.tags = { hasSome: query.tags };
-  }
-
+  const tagsArray =
+    typeof tags === 'string' && tags.length > 0 ? tags.split(',') : [];
   const skip = (Number(page) - 1) * Number(limit);
   const searchableFields = ['title', 'body'];
   const searchQuery = prisma.article.findMany({
@@ -91,6 +93,7 @@ const getAllArticlesFromDB = async (query: Record<string, unknown>) => {
       OR: searchableFields.map((field) => ({
         [field]: { contains: searchTerm },
       })),
+      ...(tagsArray.length > 0 ? { tags: { hasSome: tagsArray } } : {}),
     },
     orderBy: {
       [sortBy as string]: sortOrder === 'asc' ? 'asc' : 'desc',
