@@ -5,7 +5,7 @@ import { ArticleService } from './article.service';
 import { CustomRequest } from '../../middlewares/auth';
 
 const addArticle = catchAsync(async (req: CustomRequest, res) => {
-  const payload = req.body;
+  const payload = { ...req.body, userId: req.user?.id };
   const result = await ArticleService.addArticleToDB(payload);
   sendResponse(res, {
     success: true,

@@ -4,8 +4,8 @@ import { TArticle } from './article.interface';
 import { prisma } from '../../utils/prisma';
 import OpenAI from 'openai';
 const addArticleToDB = async (payload: TArticle) => {
-  const articleData = { ...payload };
-  const result = await prisma.article.create({ data: articleData });
+  console.log(payload);
+  const result = await prisma.article.create({ data: payload });
   return result;
 };
 
