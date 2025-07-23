@@ -15,7 +15,10 @@ const routes_1 = __importDefault(require("./app/routes"));
 const app = (0, express_1.default)();
 //parsers
 app.use(express_1.default.json());
-const allowedOrigins = ['http://localhost:3000', 'https://my-ink.vercel.app'];
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://article-summarizer.ctafsiras.com',
+];
 const corsOptions = {
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {

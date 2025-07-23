@@ -12,7 +12,10 @@ const app: Application = express();
 
 //parsers
 app.use(express.json());
-const allowedOrigins = ['http://localhost:3000', 'https://my-ink.vercel.app'];
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://article-summarizer.ctafsiras.com',
+];
 
 const corsOptions = {
   origin: (
