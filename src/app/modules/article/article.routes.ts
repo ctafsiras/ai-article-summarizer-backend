@@ -27,7 +27,7 @@ router.patch(
   ArticleController.updateArticle,
 );
 
-router.get('/', auth(USER_ROLE.user), ArticleController.getAllArticles);
+router.get('/', ArticleController.getAllArticles);
 
 router.get(
   '/my-articles',
@@ -35,16 +35,8 @@ router.get(
   ArticleController.getMyAllArticle,
 );
 
-router.get(
-  '/:articleId',
-  auth(USER_ROLE.user),
-  ArticleController.getSingleArticle,
-);
+router.get('/:articleId', ArticleController.getSingleArticle);
 
-router.get(
-  '/summerize/:articleId',
-  auth(USER_ROLE.user),
-  ArticleController.summerizeSingleArticle,
-);
+router.get('/summarize/:articleId', ArticleController.summerizeSingleArticle);
 
 export const ArticleRoutes = router;
