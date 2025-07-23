@@ -27,7 +27,7 @@ model Article {
   id        Int      @id @default(autoincrement())
   title     String
   body      String
-  tags      String[]
+  tags      String[] @default([])
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
