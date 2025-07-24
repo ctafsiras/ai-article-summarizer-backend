@@ -18,5 +18,5 @@ module.exports = {
     'no-console': 'warn',
     'no-undef': 'error',
   },
-  ignorePatterns: ['dist', 'node_modules', '*.config.js'],
+  ignorePatterns: ['dist', 'node_modules', '*.config.js', '.eslintrc.js'],
 };

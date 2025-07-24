@@ -1,8 +1,11 @@
-import tseslint from '@typescript-eslint/eslint-plugin';
-import parser from '@typescript-eslint/parser';
+const tseslint = require('@typescript-eslint/eslint-plugin');
+const parser = require('@typescript-eslint/parser');
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
-export default [
+module.exports = [
+  {
+    ignores: ['dist', 'node_modules', '*.config.js', '.eslintrc.js', 'eslint.config.js'],
+  },
   {
     files: ['**/*.{js,ts}'],
     languageOptions: {
@@ -40,7 +43,5 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
-  {
-    ignores: ['dist', 'node_modules', '*.config.js'],
-  },
+
 ];
