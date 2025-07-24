@@ -87,6 +87,17 @@ const summerizeSingleArticle = catchAsync(async (req: CustomRequest, res) => {
   });
 });
 
+const parseArticleFromLink = catchAsync(async (req: CustomRequest, res) => {
+  const articleLink = req.body.articleLink;
+  const result = await ArticleService.parseArticleFromLink(articleLink);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Article parsed successfully!',
+    data: result,
+  });
+});
+
 export const ArticleController = {
   addArticle,
   deleteArticle,
@@ -95,4 +106,5 @@ export const ArticleController = {
   getAllArticles,
   getMyAllArticle,
   summerizeSingleArticle,
+  parseArticleFromLink,
 };

@@ -17,7 +17,13 @@ const updateArticleSchema = zod_1.z.object({
         tags: zod_1.z.array(zod_1.z.string()).optional(),
     }),
 });
+const parseArticleFromLinkSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        articleLink: zod_1.z.string().url(),
+    }),
+});
 exports.ArticleValidation = {
     createArticleSchema,
     updateArticleSchema,
+    parseArticleFromLinkSchema,
 };

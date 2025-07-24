@@ -39,4 +39,11 @@ router.get('/:articleId', ArticleController.getSingleArticle);
 
 router.get('/summarize/:articleId', ArticleController.summerizeSingleArticle);
 
+router.post(
+  '/parse-from-link',
+  auth(USER_ROLE.user),
+  validateRequest(ArticleValidation.parseArticleFromLinkSchema),
+  ArticleController.parseArticleFromLink,
+);
+
 export const ArticleRoutes = router;

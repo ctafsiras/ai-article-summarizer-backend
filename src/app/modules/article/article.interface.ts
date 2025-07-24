@@ -7,3 +7,9 @@ export type TArticle = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export interface ParsedArticle {
+  title: string;
+  body: string;
+  tags: string[];
+}

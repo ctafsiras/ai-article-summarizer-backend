@@ -17,7 +17,14 @@ const updateArticleSchema = z.object({
   }),
 });
 
+const parseArticleFromLinkSchema = z.object({
+  body: z.object({
+    articleLink: z.string().url(),
+  }),
+});
+
 export const ArticleValidation = {
   createArticleSchema,
   updateArticleSchema,
+  parseArticleFromLinkSchema,
 };
