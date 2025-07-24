@@ -249,6 +249,29 @@ const parseArticleFromLink = async (
   };
 };
 
+const askArticleAI = async (
+  articleId: number,
+  messages: { role: 'user' | 'system'; content: string }[],
+) => {
+  const articleData = await prisma.article.findUnique({
+    where: { id: articleId },
+  });
+  if (!articleData) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Article does not exist!');
+  }
+  const response = await client.responses.create({
+    model: 'gpt-4o-mini',
+    input: [
+      {
+        role: 'system',
+        content: `You are an expert in article analysis. You have full knowledge of the article titled "${articleData.title}" with the following content: ${articleData.body}. Answer the user's questions strictly based on the information provided in the article.`,
+      },
+      ...messages,
+    ],
+  });
+  return { result: response.output_text };
+};
+
 export const ArticleService = {
   addArticleToDB,
   deleteArticleFromDB,
@@ -258,4 +281,5 @@ export const ArticleService = {
   summerizeSingleArticle,
   getMyAllArticleFromDB,
   parseArticleFromLink,
+  askArticleAI,
 };

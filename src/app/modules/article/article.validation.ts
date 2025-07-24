@@ -23,8 +23,15 @@ const parseArticleFromLinkSchema = z.object({
   }),
 });
 
+const askArticleAISchema = z.object({
+  body: z.object({
+    messages: z.array(z.object({ role: z.string(), content: z.string() })),
+  }),
+});
+
 export const ArticleValidation = {
   createArticleSchema,
   updateArticleSchema,
   parseArticleFromLinkSchema,
+  askArticleAISchema,
 };

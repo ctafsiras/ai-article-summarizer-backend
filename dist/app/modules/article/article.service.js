@@ -242,6 +242,25 @@ const parseArticleFromLink = (articleLink) => __awaiter(void 0, void 0, void 0, 
         tags: aiResult.tags || [],
     };
 });
+const askArticleAI = (articleId, messages) => __awaiter(void 0, void 0, void 0, function* () {
+    const articleData = yield prisma_1.prisma.article.findUnique({
+        where: { id: articleId },
+    });
+    if (!articleData) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'Article does not exist!');
+    }
+    const response = yield client.responses.create({
+        model: 'gpt-4o-mini',
+        input: [
+            {
+                role: 'system',
+                content: `You are an expert in article analysis. You have full knowledge of the article titled "${articleData.title}" with the following content: ${articleData.body}. Answer the user's questions strictly based on the information provided in the article.`,
+            },
+            ...messages,
+        ],
+    });
+    return { result: response.output_text };
+});
 exports.ArticleService = {
     addArticleToDB,
     deleteArticleFromDB,
@@ -251,4 +270,5 @@ exports.ArticleService = {
     summerizeSingleArticle,
     getMyAllArticleFromDB,
     parseArticleFromLink,
+    askArticleAI,
 };

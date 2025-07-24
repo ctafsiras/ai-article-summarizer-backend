@@ -44,6 +44,13 @@ router.get(
 );
 
 router.post(
+  '/ask/:articleId',
+  auth(USER_ROLE.user),
+  validateRequest(ArticleValidation.askArticleAISchema),
+  ArticleController.askArticleAI,
+);
+
+router.post(
   '/parse-from-link',
   auth(USER_ROLE.user),
   validateRequest(ArticleValidation.parseArticleFromLinkSchema),

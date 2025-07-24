@@ -89,6 +89,17 @@ const summerizeSingleArticle = (0, catchAsync_1.default)((req, res) => __awaiter
         data: result,
     });
 }));
+const askArticleAI = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const articleId = req.params.articleId;
+    const messages = req.body.messages;
+    const result = yield article_service_1.ArticleService.askArticleAI(Number(articleId), messages);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Article answered successfully!',
+        data: result,
+    });
+}));
 const parseArticleFromLink = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const articleLink = req.body.articleLink;
     const result = yield article_service_1.ArticleService.parseArticleFromLink(articleLink);
@@ -107,5 +118,6 @@ exports.ArticleController = {
     getAllArticles,
     getMyAllArticle,
     summerizeSingleArticle,
+    askArticleAI,
     parseArticleFromLink,
 };

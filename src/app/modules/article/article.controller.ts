@@ -87,6 +87,18 @@ const summerizeSingleArticle = catchAsync(async (req: CustomRequest, res) => {
   });
 });
 
+const askArticleAI = catchAsync(async (req: CustomRequest, res) => {
+  const articleId = req.params.articleId;
+  const messages = req.body.messages;
+  const result = await ArticleService.askArticleAI(Number(articleId), messages);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Article answered successfully!',
+    data: result,
+  });
+});
+
 const parseArticleFromLink = catchAsync(async (req: CustomRequest, res) => {
   const articleLink = req.body.articleLink;
   const result = await ArticleService.parseArticleFromLink(articleLink);
@@ -106,5 +118,6 @@ export const ArticleController = {
   getAllArticles,
   getMyAllArticle,
   summerizeSingleArticle,
+  askArticleAI,
   parseArticleFromLink,
 };
