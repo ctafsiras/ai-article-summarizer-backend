@@ -17,6 +17,6 @@ router.patch('/:articleId', (0, auth_1.default)(user_constant_1.USER_ROLE.user),
 router.get('/', article_controller_1.ArticleController.getAllArticles);
 router.get('/my-articles', (0, auth_1.default)(user_constant_1.USER_ROLE.user), article_controller_1.ArticleController.getMyAllArticle);
 router.get('/:articleId', article_controller_1.ArticleController.getSingleArticle);
-router.get('/summarize/:articleId', article_controller_1.ArticleController.summerizeSingleArticle);
+router.get('/summarize/:articleId', (0, auth_1.default)(user_constant_1.USER_ROLE.user), article_controller_1.ArticleController.summerizeSingleArticle);
 router.post('/parse-from-link', (0, auth_1.default)(user_constant_1.USER_ROLE.user), (0, validateRequest_1.default)(article_validation_1.ArticleValidation.parseArticleFromLinkSchema), article_controller_1.ArticleController.parseArticleFromLink);
 exports.ArticleRoutes = router;

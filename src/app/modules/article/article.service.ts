@@ -72,6 +72,9 @@ const getMyAllArticleFromDB = async (
         : {}),
       ...(tagsArray.length > 0 ? { tags: { hasSome: tagsArray } } : {}),
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
   if (!articleData) {
     throw new AppError(httpStatus.NOT_FOUND, 'Article does not exist!');

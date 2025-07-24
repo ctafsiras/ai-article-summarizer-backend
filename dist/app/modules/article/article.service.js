@@ -101,6 +101,9 @@ const getMyAllArticleFromDB = (userId, query) => __awaiter(void 0, void 0, void 
                 })),
             }
             : {})), (tagsArray.length > 0 ? { tags: { hasSome: tagsArray } } : {})),
+        orderBy: {
+            createdAt: 'desc',
+        },
     });
     if (!articleData) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'Article does not exist!');
