@@ -88,6 +88,35 @@ The backend should now be running at `http://localhost:5000` (or your specified 
 
 ---
 
+## Running with Docker
+
+You can run this backend easily using Docker. This is useful for local development, production deployments, or when you want to avoid installing dependencies manually.
+
+### 1. Prepare Your `.env` File
+
+Make sure you have a `.env` file with above mentioned variables.
+
+### 2. Build the Docker Image
+
+From the `ai-article-summarizer-backend/` directory, build the Docker image:
+
+```bash
+docker build -t ai-article-summarizer-backend .
+```
+
+### 3. Run the Docker Container
+
+Run the container and pass your `.env` file:
+
+```bash
+docker run --env-file .env -p 5000:5000 ai-article-summarizer-backend
+```
+
+- The app will be available at [http://localhost:5000](http://localhost:5000) (or the port you specify in `.env`).
+- Ensure your database and API keys are reachable from inside the container.
+
+---
+
 ## CI/CD Setup
 
 This project uses **GitHub Actions** for Continuous Integration (CI) to ensure code quality and consistency on every push and pull request to the `main` branch. The workflow automatically runs:
