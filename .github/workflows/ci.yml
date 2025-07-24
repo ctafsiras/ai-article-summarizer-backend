@@ -18,10 +18,10 @@ jobs:
       - name: Install dependencies
         run: |
           corepack enable
-          pnpm install --frozen-lockfile || npm ci
+          pnpm install --frozen-lockfile
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
       - name: Format Check
-        run: npx prettier --check "./src/**/*.+(js|ts|json)"
+        run: pnpm prettier --check "./src/**/*.+(js|ts|json)"
       - name: Test
-        run: npm test
+        run: pnpm test
