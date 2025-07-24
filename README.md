@@ -90,27 +90,45 @@ The backend should now be running at `http://localhost:5000` (or your specified 
 
 ## Running with Docker
 
-You can run this backend easily using Docker. This is useful for local development, production deployments, or when you want to avoid installing dependencies manually.
+You can run this backend easily using Docker, either by building the image yourself or by pulling a prebuilt image. This is useful for local development, production deployments, or when you want to avoid installing dependencies manually.
 
 ### 1. Prepare Your `.env` File
 
-Make sure you have a `.env` file with above mentioned variables.
+Make sure you have a `.env` file with the required variables mentioned above.
 
-### 2. Build the Docker Image
+### 2. Get the Docker Image
 
-From the `ai-article-summarizer-backend/` directory, build the Docker image:
+You have two options:
 
-```bash
-docker build -t ai-article-summarizer-backend .
-```
+- **Option A: Pull the Prebuilt Image from GitHub Container Registry**
+
+  ```bash
+  docker pull ghcr.io/ctafsiras/ai-article-summarizer-backend:latest
+  ```
+
+- **Option B: Build the Image Yourself**
+
+  From the `ai-article-summarizer-backend/` directory:
+
+  ```bash
+  docker build -t ai-article-summarizer-backend .
+  ```
 
 ### 3. Run the Docker Container
 
-Run the container and pass your `.env` file:
+Run the container using your `.env` file:
 
-```bash
-docker run --env-file .env -p 5000:5000 ai-article-summarizer-backend
-```
+- If you **pulled the image**:
+
+  ```bash
+  docker run --env-file .env -p 5000:5000 ghcr.io/ctafsiras/ai-article-summarizer-backend:latest
+  ```
+
+- If you **built the image locally**:
+
+  ```bash
+  docker run --env-file .env -p 5000:5000 ai-article-summarizer-backend
+  ```
 
 - The app will be available at [http://localhost:5000](http://localhost:5000) (or the port you specify in `.env`).
 - Ensure your database and API keys are reachable from inside the container.
