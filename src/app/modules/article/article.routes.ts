@@ -37,7 +37,11 @@ router.get(
 
 router.get('/:articleId', ArticleController.getSingleArticle);
 
-router.get('/summarize/:articleId', ArticleController.summerizeSingleArticle);
+router.get(
+  '/summarize/:articleId',
+  auth(USER_ROLE.user),
+  ArticleController.summerizeSingleArticle,
+);
 
 router.post(
   '/parse-from-link',
