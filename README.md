@@ -87,3 +87,34 @@ Create a `.env` file in the root of the backend directory. Below are the require
 The backend should now be running at `http://localhost:5000` (or your specified `PORT`).
 
 ---
+
+## CI/CD Setup
+
+This project uses **GitHub Actions** for Continuous Integration (CI) to ensure code quality and consistency on every push and pull request to the `main` branch. The workflow automatically runs:
+
+- **Linting** (`npm run lint`): Checks code for style and programming errors using ESLint.
+- **Formatting** (`npx prettier --check`): Ensures code is formatted according to Prettier rules.
+- **Testing** (`npm test`): Runs unit tests using Jest.
+
+You can find the workflow configuration in `.github/workflows/ci.yml`.
+
+### Running Checks Locally
+
+- **Lint**:
+  ```bash
+  npm run lint
+  # or
+  pnpm lint
+  ```
+- **Format**:
+  ```bash
+  npm run prettier
+  # or
+  pnpm prettier
+  ```
+- **Test**:
+  ```bash
+  npm test
+  # or
+  pnpm test
+  ```
