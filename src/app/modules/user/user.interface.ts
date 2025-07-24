@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+ 
 import { USER_ROLE } from './user.constant';
 
 export type TUser = {
